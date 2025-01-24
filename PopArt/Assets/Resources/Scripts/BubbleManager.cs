@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class BubbleManager : MonoBehaviour
 {
@@ -30,7 +31,8 @@ public class BubbleManager : MonoBehaviour
         {
             Debug.Log($"Kollision erkannt mit: {hitCollider.transform.name}");
             GameManager.Instance.FillShape(hitCollider.transform.name, bubbleColor);
-            Destroy(gameObject); 
+            // hide bubble for 2 seconds before spawning it elsewhere
+            StartCoroutine(RespawnBubble());
         }
         else
         {
@@ -38,4 +40,17 @@ public class BubbleManager : MonoBehaviour
         }
     }
 
+    private IEnumerator RespawnBubble()
+    {
+        GetComponent<SpriteRenderer>().enabled = false; 
+        GetComponent<Collider2D>().enabled = false;
+
+        yield return new WaitForSeconds(2f);
+
+        Vector2 randomPosition = new Vector2(Random.Range(-8f, 8f), Random.Range(-4f, 4f));
+        transform.position = randomPosition;
+
+        GetComponent<SpriteRenderer>().enabled = true;
+        GetComponent<Collider2D>().enabled = true;
+    }
 }
