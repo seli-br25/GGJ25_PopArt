@@ -1,0 +1,25 @@
+{
+  "artworks": [
+    {
+      "id": 1,
+      "title": "monaLisa",
+      "components": [
+        {
+          "name": "triangle",
+          "correctColor": "#ffcc00",
+          "isRightColor": false
+        },
+        {
+          "name": "square",
+          "correctColor": "#ff0000",
+          "isRightColor": false
+        },
+        {
+          "name": "circle",
+          "correctColor": "#ffe0bd",
+          "isRightColor": false
+        }
+      ]
+    }
+  ]
+}
