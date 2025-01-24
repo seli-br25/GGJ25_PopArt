@@ -42,10 +42,14 @@ public class GameManager : MonoBehaviour
     private bool gameStarted = false;
     private bool gameEnded = false;
 
+    private AudioSource backgroundMusic;
 
     private void Awake()
     {
         Instance = this;
+        AudioClip musicClip = Resources.Load<AudioClip>("Audio/minigameBackground"); 
+        backgroundMusic = gameObject.AddComponent<AudioSource>();
+        backgroundMusic.clip = musicClip;
     }
 
     void Start()
@@ -55,6 +59,9 @@ public class GameManager : MonoBehaviour
         gameStarted = false;
         LoadArtwork(1);
         SpawnBubbles();
+        backgroundMusic.loop = true;
+        backgroundMusic.volume = 0.5f;
+        backgroundMusic.Play();
     }
 
     private void Update()
@@ -186,6 +193,7 @@ public class GameManager : MonoBehaviour
             startCountdownText.gameObject.SetActive(true);
             gameEnded = true;
             gameStarted = false;
+            backgroundMusic.Stop();
             // TODO: WIN SCENE
         }
     }
@@ -197,6 +205,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Zeit abgelaufen!");
         startCountdownText.text = "GAME OVER!";
         startCountdownText.gameObject.SetActive(true);
+        backgroundMusic.Stop();
         // TODO: GAME OVER SCENE
     }
 }
