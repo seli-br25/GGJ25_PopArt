@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
     private bool gameEnded = false;
 
     private AudioSource backgroundMusic;
+    public GameObject gameOverUI;
+    private UIFader UIFader;
 
     private void Awake()
     {
@@ -59,6 +61,9 @@ public class GameManager : MonoBehaviour
         gameStarted = false;
         LoadArtwork(1);
         SpawnBubbles();
+
+        UIFader = gameOverUI.GetComponent<UIFader>();
+
         backgroundMusic.loop = true;
         backgroundMusic.volume = 0.5f;
         backgroundMusic.Play();
@@ -206,6 +211,6 @@ public class GameManager : MonoBehaviour
         startCountdownText.text = "GAME OVER!";
         startCountdownText.gameObject.SetActive(true);
         backgroundMusic.Stop();
-        // TODO: GAME OVER SCENE
+        UIFader.ActivateOnClick(gameOverUI);
     }
 }
