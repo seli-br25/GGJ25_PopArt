@@ -17,11 +17,26 @@ public class CharacterManager : MonoBehaviour
     bool isKeyPressed = false;
     bool gameStarted = false;
 
+    public AudioSource backgroundMusic;
+    public AudioSource clickMusic;
+
     void Start()
     {
         // Get the Animator component attached to this GameObject
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        AudioClip musicClip = Resources.Load<AudioClip>("Audio/gallery");
+        backgroundMusic = gameObject.AddComponent<AudioSource>();
+        backgroundMusic.clip = musicClip;
+        backgroundMusic.loop = true;
+        backgroundMusic.volume = 0.1f;
+        backgroundMusic.Play();
+
+
+        AudioClip clickSound = Resources.Load<AudioClip>("Audio/pop3");
+        clickMusic = gameObject.AddComponent<AudioSource>();
+        clickMusic.clip = clickSound;
+        backgroundMusic.volume = 2.0f;
 
         if (animator == null)
         {
@@ -95,6 +110,10 @@ public class CharacterManager : MonoBehaviour
         // Continue moving until the character reaches the target position
         while (transform.position.x < 0)
         {
+            if (backgroundMusic.volume < 0.4)
+            {
+                backgroundMusic.volume += 0.001f;
+            }
             // Move in the positive x-direction
             moveDirection = 1f;
             rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
@@ -108,5 +127,11 @@ public class CharacterManager : MonoBehaviour
         isKeyPressed = false;
         moveDirection = 0f;
         gameStarted = true;
+        backgroundMusic.volume = 0.4f;
+    }
+
+    public void PlayClickSound()
+    {
+        clickMusic.Play();
     }
 }

@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     public GameObject exitButton;
 
     public AudioClip jailSound;
+    public AudioClip countdownSound;
 
     private void Awake()
     {
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        countdownSound = Resources.Load<AudioClip>("Audio/countdown");
         StartCoroutine(StartCountdown());
         UpdateCountdownText();
         gameStarted = false;
@@ -165,16 +167,24 @@ public class GameManager : MonoBehaviour
 
     void UpdateCountdownText()
     {
+        int minute = Mathf.FloorToInt(countdownTime / 60);
         int seconds = Mathf.FloorToInt(countdownTime % 60);
         int milliseconds = Mathf.FloorToInt((countdownTime * 1000) % 1000 / 10);
-        countdownText.text = $"{seconds:00}:{milliseconds:00}";
+        if (minute < 1)
+        {
+            countdownText.text = $"{seconds:00}:{milliseconds:00}";
+        } else
+        {
+            countdownText.text = $"{minute:00}:{seconds:00}:{milliseconds:00}";
+        }
+        
     }
 
     IEnumerator StartCountdown()
     {
         // "3, 2, 1, Go!"-Countdown
         startCountdownText.gameObject.SetActive(true);
-
+        AudioSource.PlayClipAtPoint(countdownSound, transform.position);
         for (int i = 3; i > 0; i--)
         {
             startCountdownText.text = i.ToString();
