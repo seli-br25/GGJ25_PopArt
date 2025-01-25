@@ -5,18 +5,73 @@
       "title": "monaLisa",
       "components": [
         {
-          "name": "triangle",
-          "correctColor": "#ffcc00",
+          "name": "Face",
+          "correctColor": "#e5ca99",
           "isRightColor": false
         },
         {
-          "name": "square",
-          "correctColor": "#ff0000",
+          "name": "Hand1",
+          "correctColor": "#e5ca99",
           "isRightColor": false
         },
         {
-          "name": "circle",
-          "correctColor": "#ffe0bd",
+          "name": "Hand2",
+          "correctColor": "#e5ca99",
+          "isRightColor": false
+        },
+        {
+          "name": "ArmUpper1",
+          "correctColor": "#270e21",
+          "isRightColor": false
+        },
+        {
+          "name": "ArmUpper2",
+          "correctColor": "#270e21",
+          "isRightColor": false
+        },
+        {
+          "name": "ArmDowner1",
+          "correctColor": "#612f0e",
+          "isRightColor": false
+        },
+        {
+          "name": "ArmDowner2",
+          "correctColor": "#612f0e",
+          "isRightColor": false
+        },
+        {
+          "name": "Body",
+          "correctColor": "#3e261e",
+          "isRightColor": false
+        },
+        {
+          "name": "Scarf",
+          "correctColor": "#563f27",
+          "isRightColor": false
+        },
+        {
+          "name": "Hair",
+          "correctColor": "#966060",
+          "isRightColor": false
+        },
+        {
+          "name": "Chair",
+          "correctColor": "#4c2628",
+          "isRightColor": false
+        },
+        {
+          "name": "BackgroundUp",
+          "correctColor": "#96975c",
+          "isRightColor": false
+        },
+        {
+          "name": "BackgroundMiddle",
+          "correctColor": "#9c4f20",
+          "isRightColor": false
+        },
+        {
+          "name": "BackgroundDown",
+          "correctColor": "#583a30",
           "isRightColor": false
         }
       ]

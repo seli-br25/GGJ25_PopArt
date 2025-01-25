@@ -9,13 +9,15 @@ public class BubbleManager : MonoBehaviour
     public float speed = 5f;
 
     private AudioClip popSound;
+    public GameObject reflection;
+    private SpriteRenderer reflectionSprite;
 
     void Start()
     {
         movementDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
         GetComponent<SpriteRenderer>().color = bubbleColor;
         popSound = Resources.Load<AudioClip>("Audio/pop");
-
+        reflectionSprite = reflection.GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -49,6 +51,7 @@ public class BubbleManager : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().enabled = false; 
         GetComponent<Collider2D>().enabled = false;
+        reflectionSprite.enabled = false;
 
         yield return new WaitForSeconds(2f);
 
@@ -57,5 +60,6 @@ public class BubbleManager : MonoBehaviour
 
         GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<Collider2D>().enabled = true;
+        reflectionSprite.enabled = true;
     }
 }
