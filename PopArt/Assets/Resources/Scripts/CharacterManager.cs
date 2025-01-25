@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class CharacterManager : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class CharacterManager : MonoBehaviour
 
     // Rigidbody2D for movement
     private Rigidbody2D rb;
+
+    // Movement direction
+    float moveDirection = 0f;
+    bool isKeyPressed = false;
+    bool gameStarted = false;
 
     void Start()
     {
@@ -30,45 +36,77 @@ public class CharacterManager : MonoBehaviour
 
     void Update()
     {
-        // Movement direction
-        float moveDirection = 0f;
-        bool isKeyPressed = false;
-
-        // Check for specific key inputs
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        if (gameStarted)
         {
-            isKeyPressed = true;
+            // Check for specific key inputs
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            {
+                isKeyPressed = true;
 
-            // Set the animator parameter to trigger the run animation
-            animator.SetBool("isRunning", true);
+                // Set the animator parameter to trigger the run animation
+                animator.SetBool("isRunning", true);
 
-            // Ensure the character faces right
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+                // Ensure the character faces right
+                transform.rotation = Quaternion.Euler(0, 0, 0);
 
+                // Move in the positive x-direction
+                moveDirection = 1f;
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+            {
+                isKeyPressed = true;
+
+                // Set the animator parameter to trigger the run animation
+                animator.SetBool("isRunning", true);
+
+                // Ensure the character faces left
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+
+                // Move in the negative x-direction
+                moveDirection = -1f;
+            }
+            else
+            {
+                isKeyPressed = false;
+                animator.SetBool("isRunning", false);
+                moveDirection = 0f;
+            }
+
+            // Apply movement using Rigidbody2D
+            rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
+        }
+    }
+
+    public void ComeIn()
+    {
+        StartCoroutine(ComeInCoroutine());
+    }
+
+    private IEnumerator ComeInCoroutine()
+    {
+        isKeyPressed = true;
+
+        // Set the animator parameter to trigger the run animation
+        animator.SetBool("isRunning", true);
+
+        // Ensure the character faces right
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        // Continue moving until the character reaches the target position
+        while (transform.position.x < 0)
+        {
             // Move in the positive x-direction
             moveDirection = 1f;
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            isKeyPressed = true;
+            rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
 
-            // Set the animator parameter to trigger the run animation
-            animator.SetBool("isRunning", true);
-
-            // Ensure the character faces left
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-
-            // Move in the negative x-direction
-            moveDirection = -1f;
+            yield return null; // Wait for the next frame
         }
 
-        // Apply movement using Rigidbody2D
-        rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
+        // Stop the running animation
+        animator.SetBool("isRunning", false);
 
-        // Immediately stop the running animation if no key is pressed
-        if (!isKeyPressed)
-        {
-            animator.SetBool("isRunning", false);
-        }
+        isKeyPressed = false;
+        moveDirection = 0f;
+        gameStarted = true;
     }
 }

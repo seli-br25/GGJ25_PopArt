@@ -121,23 +121,26 @@ public class UIFader : MonoBehaviour
     private IEnumerator FadeOutCoroutine(Graphic uiElement)
     {
         Color originalColor = uiElement.color;
+        float startAlpha = originalColor.a; // Berücksichtige die aktuelle Transparenz
         float elapsedTime = 0f;
 
         while (elapsedTime < fadeDuration)
         {
             elapsedTime += Time.deltaTime;
-            float alphaValue = Mathf.Lerp(1, 0, elapsedTime / fadeDuration);
+            float alphaValue = Mathf.Lerp(startAlpha, 0, elapsedTime / fadeDuration); // Von startAlpha zu 0
             uiElement.color = new Color(originalColor.r, originalColor.g, originalColor.b, alphaValue);
             yield return null; // Warten auf den nächsten Frame
         }
 
-        // Am Ende des Fade-Outs vollständig transparent setzen
         uiElement.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
-        Button buttonComponent = this.gameObject.GetComponent<Button>();
+
+        Button buttonComponent = uiElement.gameObject.GetComponent<Button>();
         if (buttonComponent != null)
         {
-            buttonComponent.enabled = false; 
+            buttonComponent.enabled = false;
         }
+
+        // Deaktiviere das GameObject
         uiElement.gameObject.SetActive(false);
     }
 
