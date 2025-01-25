@@ -19,6 +19,11 @@ public class CharacterManager : MonoBehaviour
 
     public AudioSource backgroundMusic;
     public AudioSource clickMusic;
+    public BoxCollider2D wallLeft;
+
+    public ArtInteractionManager artInteractionManager1;
+    public ArtInteractionManager artInteractionManager2;
+    public ArtInteractionManager artInteractionManager3;
 
     void Start()
     {
@@ -36,7 +41,7 @@ public class CharacterManager : MonoBehaviour
         AudioClip clickSound = Resources.Load<AudioClip>("Audio/pop3");
         clickMusic = gameObject.AddComponent<AudioSource>();
         clickMusic.clip = clickSound;
-        backgroundMusic.volume = 2.0f;
+        clickMusic.volume = 2.0f;
 
         if (animator == null)
         {
@@ -128,6 +133,10 @@ public class CharacterManager : MonoBehaviour
         moveDirection = 0f;
         gameStarted = true;
         backgroundMusic.volume = 0.4f;
+        wallLeft.enabled = true;
+        artInteractionManager1.SetGameStarted();
+        artInteractionManager2.SetGameStarted();
+        artInteractionManager3.SetGameStarted();
     }
 
     public void PlayClickSound()

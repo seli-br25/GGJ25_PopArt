@@ -6,7 +6,7 @@
       "components": [
         {
           "name": "BackgroundOrange",
-          "correctColor": "#2c5ad1",
+          "correctColor": "#f3592a",
           "isRightColor": false
         },
         {
@@ -30,7 +30,7 @@
           "isRightColor": false
         },
         {
-          "name": "Dress",
+          "name": "Body",
           "correctColor": "#181d16",
           "isRightColor": false
         },
@@ -72,7 +72,7 @@
         },
         {
           "name": "Shirt",
-          "correctColor": "#fff8d6",
+          "correctColor": "#ffeecf",
           "isRightColor": false
         },
         {
@@ -82,12 +82,12 @@
         },
         {
           "name": "BackgroundMiddle",
-          "correctColor": "#9ec0c5",
+          "correctColor": "#7aa7ae",
           "isRightColor": false
         },
         {
           "name": "BackgroundUp",
-          "correctColor": "#ecf8fa",
+          "correctColor": "#d1f5ff",
           "isRightColor": false
         }
       ]
@@ -102,7 +102,7 @@
           "isRightColor": false
         },
         {
-          "name": "Hand",
+          "name": "Hands",
           "correctColor": "#e5ca99",
           "isRightColor": false
         },
@@ -117,12 +117,7 @@
           "isRightColor": false
         },
         {
-          "name": "ArmDowner1",
-          "correctColor": "#623618",
-          "isRightColor": false
-        },
-        {
-          "name": "ArmDowner2",
+          "name": "ArmDowners",
           "correctColor": "#623618",
           "isRightColor": false
         },

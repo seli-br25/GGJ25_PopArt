@@ -6,19 +6,26 @@ using UnityEngine.SceneManagement;
 
 public class ArtInteractionManager : MonoBehaviour
 {
-    private Material material;
+    private SpriteRenderer renderer;
     private bool isOnArt = false;
-    private int artID = -1;
+    private int gameID;
+    private bool gameStarted;
 
     void Start()
     {
         // Get the material of the SpriteRenderer
-        material = GetComponent<SpriteRenderer>().material;
+        renderer = GetComponent<SpriteRenderer>();
+        if (renderer == null)
+        {
+            Debug.LogError("SpriteRenderer not found on the GameObject!");
+        }
+        gameID = int.Parse(gameObject.name);
+        gameStarted = false;
     }
 
     private void Update()
     {
-        if (isOnArt && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)))
+        if (isOnArt && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) && gameStarted)
         {
             PerformAction();
         }
@@ -26,29 +33,38 @@ public class ArtInteractionManager : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && ColorUtility.TryParseHtmlString("#B38F28", out Color color) && gameStarted)
         {
             Debug.Log("Is on art!");
             // Enable the outline by changing the thickness
-            material.SetFloat("_OutlineThickness", 10.0f);
+            renderer.color = color;
             isOnArt = true;
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && gameStarted)
         {
             // Disable the outline by setting thickness to 0
-            material.SetFloat("_OutlineThickness", 0f);
+            renderer.color = Color.white;
             isOnArt = false;
         }
     }
 
     void PerformAction()
     {
-        material.SetFloat("_OutlineThickness", 0f);
-        Debug.Log($"Button {name} pressed!");
-        SceneManager.LoadScene("MiniGame");
+        if (gameStarted)
+        {
+            renderer.color = Color.gray;
+            Debug.Log($"Button {name} pressed!");
+            SceneManager.LoadScene("MiniGame" + gameID);
+        }   
+    }
+
+    public void SetGameStarted()
+    {
+        gameStarted = true;
+        Debug.Log("game started: " + gameID);
     }
 }

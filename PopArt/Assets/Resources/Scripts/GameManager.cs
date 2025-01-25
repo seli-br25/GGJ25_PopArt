@@ -131,14 +131,44 @@ public class GameManager : MonoBehaviour
 
     void SpawnBubbles()
     {
+        List<Color> colorsToSpawn = new List<Color>();
+
+        foreach (var component in currentArtwork.components)
+        {
+            Color color = HexToColor(component.correctColor);
+            // add each color twice
+            colorsToSpawn.Add(color);
+            colorsToSpawn.Add(color);
+        }
+
+        while (colorsToSpawn.Count < bubbleCount)
+        {
+            int randomIndex = Random.Range(0, currentArtwork.components.Count);
+            Color randomColor = HexToColor(currentArtwork.components[randomIndex].correctColor);
+            colorsToSpawn.Add(randomColor);
+        }
+
+        Shuffle(colorsToSpawn);
+        
         for (int i = 0; i < bubbleCount; i++)
         {
-            Vector3 randomPosition = new Vector3(Random.Range(-2f, 6f), Random.Range(-4f, 4f), -2);
+            Vector3 randomPosition = new Vector3(Random.Range(-1f, 5f), Random.Range(-4f, 4f), -2);
             GameObject bubble = Instantiate(bubblePrefab, randomPosition, Quaternion.identity);
-            int randomIndex = Random.Range(0, currentArtwork.components.Count);
-            var component = currentArtwork.components[randomIndex];
-            bubble.GetComponent<BubbleManager>().bubbleColor = HexToColor(component.correctColor);
+
+            bubble.GetComponent<BubbleManager>().bubbleColor = colorsToSpawn[i];
+            var component = currentArtwork.components.Find(c => HexToColor(c.correctColor) == colorsToSpawn[i]);
             bubble.GetComponent<BubbleManager>().targetComponent = component.name;
+        }
+    }
+
+    void Shuffle<T>(List<T> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            int randomIndex = Random.Range(0, list.Count);
+            T temp = list[i];
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
         }
     }
 
