@@ -2,6 +2,98 @@
   "artworks": [
     {
       "id": 1,
+      "title": "thescream",
+      "components": [
+        {
+          "name": "BackgroundOrange",
+          "correctColor": "#2c5ad1",
+          "isRightColor": false
+        },
+        {
+          "name": "BackgroundBlue",
+          "correctColor": "#154564",
+          "isRightColor": false
+        },
+        {
+          "name": "BackgroundYellow",
+          "correctColor": "#da9518",
+          "isRightColor": false
+        },
+        {
+          "name": "BackgroundGreen",
+          "correctColor": "#3b4e44",
+          "isRightColor": false
+        },
+        {
+          "name": "Bridge",
+          "correctColor": "#674534",
+          "isRightColor": false
+        },
+        {
+          "name": "Dress",
+          "correctColor": "#181d16",
+          "isRightColor": false
+        },
+        {
+          "name": "Face",
+          "correctColor": "#a1844f",
+          "isRightColor": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "thesonofman",
+      "components": [
+        {
+          "name": "Apple",
+          "correctColor": "#cacf00",
+          "isRightColor": false
+        },
+        {
+          "name": "Hat",
+          "correctColor": "#1a131c",
+          "isRightColor": false
+        },
+        {
+          "name": "Body",
+          "correctColor": "#1a131c",
+          "isRightColor": false
+        },
+        {
+          "name": "Skin",
+          "correctColor": "#ffd698",
+          "isRightColor": false
+        },
+        {
+          "name": "Tie",
+          "correctColor": "#ce5b1b",
+          "isRightColor": false
+        },
+        {
+          "name": "Shirt",
+          "correctColor": "#fff8d6",
+          "isRightColor": false
+        },
+        {
+          "name": "BackgroundDown",
+          "correctColor": "#9f8658",
+          "isRightColor": false
+        },
+        {
+          "name": "BackgroundMiddle",
+          "correctColor": "#9ec0c5",
+          "isRightColor": false
+        },
+        {
+          "name": "BackgroundUp",
+          "correctColor": "#ecf8fa",
+          "isRightColor": false
+        }
+      ]
+    },
+    {
+      "id": 3,
       "title": "monaLisa",
       "components": [
         {

@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 [System.Serializable]
 public class Artwork
@@ -52,6 +54,8 @@ public class GameManager : MonoBehaviour
     public AudioClip jailSound;
     public AudioClip countdownSound;
 
+    private int sceneID;
+
     private void Awake()
     {
         Instance = this;
@@ -62,11 +66,23 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        string sceneName = SceneManager.GetActiveScene().name;
+        Match match = Regex.Match(sceneName, @"\d+");
+        if (match.Success)
+        {
+            sceneID = int.Parse(match.Value); 
+            Debug.Log($"Szene: {sceneName}, ID: {sceneID}");
+        }
+        else
+        {
+            Debug.LogError($"No ID found in scene name: {sceneName}");
+        }
+
         countdownSound = Resources.Load<AudioClip>("Audio/countdown");
         StartCoroutine(StartCountdown());
         UpdateCountdownText();
         gameStarted = false;
-        LoadArtwork(1);
+        LoadArtwork(sceneID);
         SpawnBubbles();
 
         UIFader = gameOverUI.GetComponent<UIFader>();
