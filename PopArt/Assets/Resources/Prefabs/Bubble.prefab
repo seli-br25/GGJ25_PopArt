@@ -206,7 +206,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 11
 --- !u!50 &5339617136344804468
 Rigidbody2D:
   serializedVersion: 4
@@ -249,4 +249,5 @@ MonoBehaviour:
   bubbleColor: {r: 0, g: 0, b: 0, a: 0}
   targetComponent: 
   speed: 2
+  popSounds: []
   reflection: {fileID: 2958829602449055361}

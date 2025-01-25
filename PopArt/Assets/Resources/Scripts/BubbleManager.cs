@@ -8,7 +8,7 @@ public class BubbleManager : MonoBehaviour
     private Vector2 movementDirection;
     public float speed = 5f;
 
-    private AudioClip popSound;
+    public AudioClip[] popSounds;
     public GameObject reflection;
     private SpriteRenderer reflectionSprite;
 
@@ -16,7 +16,11 @@ public class BubbleManager : MonoBehaviour
     {
         movementDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
         GetComponent<SpriteRenderer>().color = bubbleColor;
-        popSound = Resources.Load<AudioClip>("Audio/pop");
+        popSounds = new AudioClip[11];
+        for (int i = 0; i < popSounds.Length; i++)
+        {
+            popSounds[i] = Resources.Load<AudioClip>($"Audio/pop{i + 1}");
+        }
         reflectionSprite = reflection.GetComponent<SpriteRenderer>();
     }
 
@@ -52,7 +56,11 @@ public class BubbleManager : MonoBehaviour
         {
             Debug.Log($"Kollision erkannt mit: {hitCollider.transform.name}");
             GameManager.Instance.FillShape(hitCollider.transform.name, bubbleColor);
-            AudioSource.PlayClipAtPoint(popSound, transform.position);
+            if (popSounds.Length > 0)
+            {
+                int randomIndex = Random.Range(0, popSounds.Length);
+                AudioSource.PlayClipAtPoint(popSounds[randomIndex], transform.position);
+            }
             // hide bubble for 2 seconds before spawning it elsewhere
             StartCoroutine(RespawnBubble());
         }

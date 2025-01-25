@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     private Artwork currentArtwork;
     private List<Color> bubbleColors = new List<Color>();
 
-    public float countdownTime = 30f;
+    public float countdownTime = 60f;
     public TextMeshProUGUI countdownText;
     public TextMeshProUGUI startCountdownText;
 
@@ -45,6 +45,11 @@ public class GameManager : MonoBehaviour
     private AudioSource backgroundMusic;
     public GameObject gameOverUI;
     private UIFader UIFader;
+
+    public GameObject restartButton;
+    public GameObject exitButton;
+
+    public AudioClip jailSound;
 
     private void Awake()
     {
@@ -63,10 +68,7 @@ public class GameManager : MonoBehaviour
         SpawnBubbles();
 
         UIFader = gameOverUI.GetComponent<UIFader>();
-
-        backgroundMusic.loop = true;
-        backgroundMusic.volume = 0.5f;
-        backgroundMusic.Play();
+        jailSound = Resources.Load<AudioClip>("Audio/jail");
     }
 
     private void Update()
@@ -179,9 +181,11 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
 
-        startCountdownText.text = "Go!";
+        startCountdownText.text = "FAKE IT!";
+        backgroundMusic.loop = true;
+        backgroundMusic.volume = 0.2f;
+        backgroundMusic.Play();
         yield return new WaitForSeconds(1f);
-
         startCountdownText.gameObject.SetActive(false);
         gameStarted = true;
         UpdateCountdownText();
@@ -208,9 +212,12 @@ public class GameManager : MonoBehaviour
         gameEnded = true;
         gameStarted = false;
         Debug.Log("Zeit abgelaufen!");
-        startCountdownText.text = "GAME OVER!";
+        startCountdownText.text = "YOU GOT CAUGHT!";
         startCountdownText.gameObject.SetActive(true);
         backgroundMusic.Stop();
         UIFader.ActivateOnClick(gameOverUI);
+        AudioSource.PlayClipAtPoint(jailSound, transform.position);
+        restartButton.SetActive(true);
+        exitButton.SetActive(true);
     }
 }
