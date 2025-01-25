@@ -10,12 +10,7 @@
           "isRightColor": false
         },
         {
-          "name": "Hand1",
-          "correctColor": "#e5ca99",
-          "isRightColor": false
-        },
-        {
-          "name": "Hand2",
+          "name": "Hand",
           "correctColor": "#e5ca99",
           "isRightColor": false
         },
@@ -31,32 +26,32 @@
         },
         {
           "name": "ArmDowner1",
-          "correctColor": "#612f0e",
+          "correctColor": "#623618",
           "isRightColor": false
         },
         {
           "name": "ArmDowner2",
-          "correctColor": "#612f0e",
+          "correctColor": "#623618",
           "isRightColor": false
         },
         {
           "name": "Body",
-          "correctColor": "#3e261e",
+          "correctColor": "#3a271f",
           "isRightColor": false
         },
         {
           "name": "Scarf",
-          "correctColor": "#563f27",
+          "correctColor": "#b68e46",
           "isRightColor": false
         },
         {
           "name": "Hair",
-          "correctColor": "#966060",
+          "correctColor": "#151515",
           "isRightColor": false
         },
         {
           "name": "Chair",
-          "correctColor": "#4c2628",
+          "correctColor": "#3a271f",
           "isRightColor": false
         },
         {
@@ -66,12 +61,12 @@
         },
         {
           "name": "BackgroundMiddle",
-          "correctColor": "#9c4f20",
+          "correctColor": "#623618",
           "isRightColor": false
         },
         {
           "name": "BackgroundDown",
-          "correctColor": "#583a30",
+          "correctColor": "#4e4c4b",
           "isRightColor": false
         }
       ]

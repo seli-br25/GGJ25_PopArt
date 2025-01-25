@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < bubbleCount; i++)
         {
-            Vector3 randomPosition = new Vector3(Random.Range(-8f, 8f), Random.Range(-4f, 4f), -1);
+            Vector3 randomPosition = new Vector3(Random.Range(-2f, 6f), Random.Range(-4f, 4f), -2);
             GameObject bubble = Instantiate(bubblePrefab, randomPosition, Quaternion.identity);
             int randomIndex = Random.Range(0, currentArtwork.components.Count);
             var component = currentArtwork.components[randomIndex];

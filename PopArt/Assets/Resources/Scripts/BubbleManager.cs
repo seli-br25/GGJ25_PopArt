@@ -23,9 +23,24 @@ public class BubbleManager : MonoBehaviour
     void Update()
     {
         transform.Translate(movementDirection * speed * Time.deltaTime);
-        Vector3 position = Camera.main.WorldToViewportPoint(transform.position);
-        if (position.x < 0 || position.x > 1) movementDirection.x = -movementDirection.x;
-        if (position.y < 0 || position.y > 1) movementDirection.y = -movementDirection.y;
+        Vector3 position = transform.position;
+
+        // Begrenzung in X-Richtung zwischen -2 und 6
+        if (position.x < -2 || position.x > 6)
+        {
+            movementDirection.x = -movementDirection.x;
+        }
+
+        if (position.y < Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y ||
+            position.y > Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y)
+        {
+            movementDirection.y = -movementDirection.y; 
+        }
+        if (position.x < -2.3 || position.x > 6.3 || position.y < Camera.main.ViewportToWorldPoint(new Vector3(0, -0.3f, 0)).y ||
+            position.y > Camera.main.ViewportToWorldPoint(new Vector3(0, 1.3f, 0)).y)
+        {
+            StartCoroutine(RespawnBubble());
+        }
     }
 
     private void OnMouseDown()
@@ -55,7 +70,7 @@ public class BubbleManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        Vector2 randomPosition = new Vector2(Random.Range(-8f, 8f), Random.Range(-4f, 4f));
+        Vector2 randomPosition = new Vector2(Random.Range(-2f, 6f), Random.Range(-4f, 4f));
         transform.position = randomPosition;
 
         GetComponent<SpriteRenderer>().enabled = true;
