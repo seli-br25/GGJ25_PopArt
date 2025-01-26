@@ -47,9 +47,17 @@ public class CharacterManager : MonoBehaviour
 
     public RawImage backgroundImage;
     private UIFader backgroundUIFader;
+    public RawImage missionCompleteImage;
+    private UIFader missionCompleteFader;
+
+    public AudioClip winSound;
+    public AudioClip moneySound;
 
     void Start()
     {
+        winSound = Resources.Load<AudioClip>("Audio/win");
+        moneySound = Resources.Load<AudioClip>("Audio/chaching");
+        
         // Get the Animator component attached to this GameObject
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -73,6 +81,7 @@ public class CharacterManager : MonoBehaviour
         startPositionLetter = letterObject.GetComponent<RectTransform>().anchoredPosition;
 
         backgroundUIFader = backgroundImage.GetComponent<UIFader>();
+        missionCompleteFader = missionCompleteImage.GetComponent<UIFader>();
 
         if (animator == null)
         {
@@ -85,6 +94,14 @@ public class CharacterManager : MonoBehaviour
         }
 
         isOpen = false;
+
+        if (PlayerPrefs.GetInt($"Minigame_1_Won", 0) == 1 && PlayerPrefs.GetInt($"Minigame_2_Won", 0) == 1 && PlayerPrefs.GetInt($"Minigame_3_Won", 0) == 1)
+        {
+            missionCompleteFader.ActivateOnClick(missionCompleteImage.gameObject);
+            background.SetActive(true);
+            AudioSource.PlayClipAtPoint(winSound, transform.position);
+            AudioSource.PlayClipAtPoint(moneySound, transform.position);
+        }
     }
 
     void Update()
@@ -292,5 +309,16 @@ public class CharacterManager : MonoBehaviour
     public void PlayPaperSound()
     {
         paperSource.Play();
+    }
+
+    public void ContinueGame()
+    {
+        background.SetActive(false);
+        missionCompleteFader.DeactivateOnClick(missionCompleteImage.gameObject);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
