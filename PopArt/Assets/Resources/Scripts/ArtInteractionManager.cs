@@ -9,7 +9,10 @@ public class ArtInteractionManager : MonoBehaviour
     private SpriteRenderer renderer;
     private bool isOnArt = false;
     private int gameID;
-    private bool gameStarted;
+    public bool gameStarted;
+
+    public GameObject originalPainting;
+    public GameObject fakedPainting;
 
     void Start()
     {
@@ -21,6 +24,17 @@ public class ArtInteractionManager : MonoBehaviour
         }
         gameID = int.Parse(gameObject.name);
         gameStarted = false;
+
+        if (PlayerPrefs.GetInt($"Minigame_{gameID}_Won", 0) == 1)
+        {
+            originalPainting.SetActive(false);
+            fakedPainting.SetActive(true);
+        } else
+        {
+            originalPainting.SetActive(true);
+            fakedPainting.SetActive(false);
+        }
+        
     }
 
     private void Update()

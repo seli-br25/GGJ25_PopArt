@@ -11,6 +11,9 @@ public class BubbleManager : MonoBehaviour
     public AudioClip[] popSounds;
     public GameObject reflection;
     private SpriteRenderer reflectionSprite;
+    public Bounds bounds;
+    private bool isRespawning = false;
+
 
     void Start()
     {
@@ -27,21 +30,20 @@ public class BubbleManager : MonoBehaviour
     void Update()
     {
         transform.Translate(movementDirection * speed * Time.deltaTime);
-        Vector3 position = transform.position;
 
-        // Begrenzung in X-Richtung zwischen -1 und 5
-        if (position.x < -1 || position.x > 5)
+        if (transform.position.x < bounds.min.x || transform.position.x > bounds.max.x)
         {
             movementDirection.x = -movementDirection.x;
         }
 
-        if (position.y < Camera.main.ViewportToWorldPoint(new Vector3(0, 0.1f, 0)).y ||
-            position.y > Camera.main.ViewportToWorldPoint(new Vector3(0, 0.9f, 0)).y)
+        if (transform.position.y < bounds.min.y || transform.position.y > bounds.max.y)
         {
-            movementDirection.y = -movementDirection.y; 
+            movementDirection.y = -movementDirection.y;
         }
-        if (position.x < -2.3 || position.x > 6.3 || position.y < Camera.main.ViewportToWorldPoint(new Vector3(0, -0.3f, 0)).y ||
-            position.y > Camera.main.ViewportToWorldPoint(new Vector3(0, 1.3f, 0)).y)
+
+        if (!isRespawning &&
+        (transform.position.x < bounds.min.x - 0.4f || transform.position.x > bounds.max.x + 0.4f ||
+         transform.position.y < bounds.min.y - 0.4f || transform.position.y > bounds.max.y + 0.4f))
         {
             StartCoroutine(RespawnBubble());
         }
@@ -72,17 +74,24 @@ public class BubbleManager : MonoBehaviour
 
     private IEnumerator RespawnBubble()
     {
+        isRespawning = true;
         GetComponent<SpriteRenderer>().enabled = false; 
         GetComponent<Collider2D>().enabled = false;
         reflectionSprite.enabled = false;
 
         yield return new WaitForSeconds(2f);
 
-        Vector2 randomPosition = new Vector2(Random.Range(-1f, 5f), Random.Range(-4f, 4f));
+        Vector3 randomPosition = new Vector3(
+    Random.Range(bounds.min.x + 0.5f, bounds.max.x - 0.5f), // Abstand von 0.5f von den X-Grenzen
+    Random.Range(bounds.min.y + 0.5f, bounds.max.y - 0.5f), // Abstand von 0.5f von den Y-Grenzen
+    -2
+);
+
         transform.position = randomPosition;
 
         GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<Collider2D>().enabled = true;
         reflectionSprite.enabled = true;
+         isRespawning = false;
     }
 }

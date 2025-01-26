@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     public AudioClip countdownSound;
 
     private int sceneID;
+    public GameObject borderObject;
 
     private void Awake()
     {
@@ -149,13 +150,19 @@ public class GameManager : MonoBehaviour
         }
 
         Shuffle(colorsToSpawn);
-        
+        Bounds bubbleBounds = borderObject.GetComponent<Renderer>().bounds;
+
+
         for (int i = 0; i < bubbleCount; i++)
         {
-            Vector3 randomPosition = new Vector3(Random.Range(-1f, 5f), Random.Range(-4f, 4f), -2);
+            Vector3 randomPosition = new Vector3(
+            Random.Range(bubbleBounds.min.x, bubbleBounds.max.x),
+            Random.Range(bubbleBounds.min.y, bubbleBounds.max.y),
+            -2);
             GameObject bubble = Instantiate(bubblePrefab, randomPosition, Quaternion.identity);
 
             bubble.GetComponent<BubbleManager>().bubbleColor = colorsToSpawn[i];
+            bubble.GetComponent<BubbleManager>().bounds = bubbleBounds;
             var component = currentArtwork.components.Find(c => HexToColor(c.correctColor) == colorsToSpawn[i]);
             bubble.GetComponent<BubbleManager>().targetComponent = component.name;
         }
@@ -260,6 +267,8 @@ public class GameManager : MonoBehaviour
             gameStarted = false;
             backgroundMusic.Stop();
             // TODO: WIN SCENE
+            PlayerPrefs.SetInt($"Minigame_{sceneID}_Won", 1);
+            PlayerPrefs.Save();
         }
     }
 
@@ -275,5 +284,7 @@ public class GameManager : MonoBehaviour
         AudioSource.PlayClipAtPoint(jailSound, transform.position);
         restartButton.SetActive(true);
         exitButton.SetActive(true);
+        PlayerPrefs.SetInt($"Minigame_{sceneID}_Won", 0);
+        PlayerPrefs.Save();
     }
 }

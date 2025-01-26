@@ -15,7 +15,7 @@ public class CharacterManager : MonoBehaviour
     // Movement direction
     float moveDirection = 0f;
     bool isKeyPressed = false;
-    bool gameStarted = false;
+    public bool gameStarted = false;
 
     public AudioSource backgroundMusic;
     public AudioSource clickMusic;
