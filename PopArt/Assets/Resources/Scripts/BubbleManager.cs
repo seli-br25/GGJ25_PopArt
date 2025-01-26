@@ -42,8 +42,8 @@ public class BubbleManager : MonoBehaviour
         }
 
         if (!isRespawning &&
-        (transform.position.x < bounds.min.x - 0.4f || transform.position.x > bounds.max.x + 0.4f ||
-         transform.position.y < bounds.min.y - 0.4f || transform.position.y > bounds.max.y + 0.4f))
+        (transform.position.x < bounds.min.x - 0.6f || transform.position.x > bounds.max.x + 0.6f ||
+         transform.position.y < bounds.min.y - 0.6f || transform.position.y > bounds.max.y + 0.6f))
         {
             StartCoroutine(RespawnBubble());
         }
@@ -82,10 +82,10 @@ public class BubbleManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         Vector3 randomPosition = new Vector3(
-    Random.Range(bounds.min.x + 0.5f, bounds.max.x - 0.5f), // Abstand von 0.5f von den X-Grenzen
-    Random.Range(bounds.min.y + 0.5f, bounds.max.y - 0.5f), // Abstand von 0.5f von den Y-Grenzen
-    -2
-);
+            Random.Range(bounds.min.x + 0.5f, bounds.max.x - 0.5f), // Abstand von 0.5f von den X-Grenzen
+            Random.Range(bounds.min.y + 0.5f, bounds.max.y - 0.5f), // Abstand von 0.5f von den Y-Grenzen
+            -2
+        );
 
         transform.position = randomPosition;
 

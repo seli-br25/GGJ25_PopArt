@@ -57,11 +57,11 @@ public class UIFader : MonoBehaviour
                     {
                         if (down)
                         {
-                            startPosition = new Vector2(myImageRectTransform.anchoredPosition.x, Screen.height - 1000);
+                            startPosition = new Vector2(myImageRectTransform.anchoredPosition.x, Screen.height - 300);
                         }
                         else
                         {
-                            startPosition = new Vector2(myImageRectTransform.anchoredPosition.x, -Screen.height + 1000);
+                            startPosition = new Vector2(myImageRectTransform.anchoredPosition.x, -Screen.height + 300);
                         }
                     } else if (customDistance == 2)
                     {
