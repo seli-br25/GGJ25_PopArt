@@ -45,6 +45,9 @@ public class CharacterManager : MonoBehaviour
     public AudioSource paperSource;
     private bool isOpen;
 
+    public RawImage backgroundImage;
+    private UIFader backgroundUIFader;
+
     void Start()
     {
         // Get the Animator component attached to this GameObject
@@ -68,6 +71,8 @@ public class CharacterManager : MonoBehaviour
         paperSource.volume = 2.0f;
 
         startPositionLetter = letterObject.GetComponent<RectTransform>().anchoredPosition;
+
+        backgroundUIFader = backgroundImage.GetComponent<UIFader>();
 
         if (animator == null)
         {
@@ -119,12 +124,26 @@ public class CharacterManager : MonoBehaviour
 
                 // Move the paper directly to the target position
                 paper.GetComponent<RectTransform>().anchoredPosition = targetPosition;
+            } else
+            {
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+                {
+                    letterOpened = true;
+                    PlayPaperSound();
+                }
             }
             if(letterRead)
             {
                 openLetter.gameObject.SetActive(false);
                 StartGame();
                 letterRevealed = false;
+            } else if (!letterRead && isOpen)
+            {
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+                {
+                    letterRead = true;
+                    backgroundUIFader.FadeOutOnClick(backgroundImage);
+                }
             }
         }
         if (gameStarted)
@@ -202,6 +221,9 @@ public class CharacterManager : MonoBehaviour
 
         isKeyPressed = false;
         moveDirection = 0f;
+
+        // Apply movement using Rigidbody2D
+        rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
 
         ManageLetter();
     }

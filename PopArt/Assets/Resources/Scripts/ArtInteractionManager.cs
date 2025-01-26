@@ -58,7 +58,6 @@ public class ArtInteractionManager : MonoBehaviour
     {
         if (other.CompareTag("Player") && ColorUtility.TryParseHtmlString("#B38F28", out Color color) && gameStarted)
         {
-            Debug.Log("Is on art!");
             // Enable the outline by changing the thickness
             renderer.color = color;
             isOnArt = true;
