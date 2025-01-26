@@ -15,10 +15,12 @@ public class ArtInteractionManager : MonoBehaviour
 
     public GameObject originalPainting;
     public GameObject fakedPainting;
+    public RawImage repaintMenu;
+    private UIFader repaintFader;
 
     void Start()
     {
-        // Get the material of the SpriteRenderer
+        repaintFader = repaintMenu.GetComponent<UIFader>();
         renderer = GetComponent<SpriteRenderer>();
         if (renderer == null)
         {
@@ -42,7 +44,13 @@ public class ArtInteractionManager : MonoBehaviour
     {
         if (isOnArt && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) && gameStarted)
         {
-            PerformAction();
+            if (PlayerPrefs.GetInt($"Minigame_{gameID}_Won", 0) == 1)
+            {
+                repaintFader.ActivateOnClick(repaintMenu.gameObject);
+            } else
+            {
+                PerformAction();
+            }  
         }
     }
 
@@ -67,7 +75,7 @@ public class ArtInteractionManager : MonoBehaviour
         }
     }
 
-    void PerformAction()
+    public void PerformAction()
     {
         if (gameStarted)
         {
