@@ -42,8 +42,8 @@ public class BubbleManager : MonoBehaviour
         }
 
         if (!isRespawning &&
-        (transform.position.x < bounds.min.x - 0.6f || transform.position.x > bounds.max.x + 0.6f ||
-         transform.position.y < bounds.min.y - 0.6f || transform.position.y > bounds.max.y + 0.6f))
+        (transform.position.x < bounds.min.x - 0.7f || transform.position.x > bounds.max.x + 0.7f ||
+         transform.position.y < bounds.min.y - 0.7f || transform.position.y > bounds.max.y + 0.7f))
         {
             StartCoroutine(RespawnBubble());
         }

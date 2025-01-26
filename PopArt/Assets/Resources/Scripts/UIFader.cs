@@ -189,11 +189,12 @@ public class UIFader : MonoBehaviour
     {
         float elapsedTime = 0f;
         uiElement.anchoredPosition = fromPosition;
+        Vector2 newFrom = new Vector2(fromPosition.x, fromPosition.y - 500);
 
         while (elapsedTime < slideDuration)
         {
             elapsedTime += Time.deltaTime;
-            uiElement.anchoredPosition = Vector2.Lerp(fromPosition, toPosition, elapsedTime / slideDuration);
+            uiElement.anchoredPosition = Vector2.Lerp(newFrom, toPosition, elapsedTime / slideDuration);
             yield return null;
         }
 
@@ -212,11 +213,12 @@ public class UIFader : MonoBehaviour
     {
         float elapsedTime = 0f;
         uiElement.anchoredPosition = fromPosition;
+        Vector2 newOut = new Vector2(outPosition.x, outPosition.y - 500);
 
         while (elapsedTime < slideDuration)
         {
             elapsedTime += Time.deltaTime;
-            uiElement.anchoredPosition = Vector2.Lerp(fromPosition, outPosition, elapsedTime / slideDuration);
+            uiElement.anchoredPosition = Vector2.Lerp(fromPosition, newOut, elapsedTime / slideDuration);
             yield return null;
         }
 

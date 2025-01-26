@@ -9,6 +9,8 @@ public class ArtInteractionManager : MonoBehaviour
     private SpriteRenderer renderer;
     private bool isOnArt = false;
     private int gameID;
+
+    [SerializeField]
     public bool gameStarted;
 
     public GameObject originalPainting;
@@ -23,7 +25,6 @@ public class ArtInteractionManager : MonoBehaviour
             Debug.LogError("SpriteRenderer not found on the GameObject!");
         }
         gameID = int.Parse(gameObject.name);
-        gameStarted = false;
 
         if (PlayerPrefs.GetInt($"Minigame_{gameID}_Won", 0) == 1)
         {

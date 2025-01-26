@@ -53,12 +53,22 @@ public class GameManager : MonoBehaviour
 
     public AudioClip jailSound;
     public AudioClip countdownSound;
+    public AudioClip winSound;
+    public AudioClip moneySound;
 
     private int sceneID;
     public GameObject borderObject;
+    private bool pause;
+
+    public GameObject originalPainting;
+    public GameObject background;
+
+    public GameObject pauseButton;
+    public GameObject unpauseButton;
 
     private void Awake()
     {
+        pause = false;
         Instance = this;
         AudioClip musicClip = Resources.Load<AudioClip>("Audio/minigameBackground"); 
         backgroundMusic = gameObject.AddComponent<AudioSource>();
@@ -88,13 +98,15 @@ public class GameManager : MonoBehaviour
 
         UIFader = gameOverUI.GetComponent<UIFader>();
         jailSound = Resources.Load<AudioClip>("Audio/jail");
+        winSound = Resources.Load<AudioClip>("Audio/win");
+        moneySound = Resources.Load<AudioClip>("Audio/chaching");
     }
 
     private void Update()
     {
         if (gameEnded) return;
 
-        if (gameStarted)
+        if (gameStarted && !pause)
         {
             if (countdownTime > 0)
             {
@@ -190,7 +202,7 @@ public class GameManager : MonoBehaviour
 
     public void FillShape(string shapeName, Color color)
     {
-        if (gameStarted)
+        if (gameStarted && !pause)
         {
             Transform shape = artworkContainer.Find(shapeName);
             if (shape != null)
@@ -249,6 +261,8 @@ public class GameManager : MonoBehaviour
         backgroundMusic.volume = 0.2f;
         backgroundMusic.Play();
         yield return new WaitForSeconds(1f);
+        originalPainting.SetActive(false);
+        background.SetActive(false);
         startCountdownText.gameObject.SetActive(false);
         gameStarted = true;
         UpdateCountdownText();
@@ -266,9 +280,11 @@ public class GameManager : MonoBehaviour
             gameEnded = true;
             gameStarted = false;
             backgroundMusic.Stop();
-            // TODO: WIN SCENE
             PlayerPrefs.SetInt($"Minigame_{sceneID}_Won", 1);
             PlayerPrefs.Save();
+            exitButton.SetActive(true);
+            AudioSource.PlayClipAtPoint(winSound, transform.position);
+            AudioSource.PlayClipAtPoint(moneySound, transform.position);
         }
     }
 
@@ -286,5 +302,22 @@ public class GameManager : MonoBehaviour
         exitButton.SetActive(true);
         PlayerPrefs.SetInt($"Minigame_{sceneID}_Won", 0);
         PlayerPrefs.Save();
+        background.SetActive(true);
+    }
+
+    public void TogglePause()
+    {
+        pause = !pause;
+        if (pause)
+        {
+            backgroundMusic.Pause();
+            pauseButton.SetActive(false);
+            unpauseButton.SetActive(true);
+        } else
+        {
+            backgroundMusic.UnPause();
+            pauseButton.SetActive(true);
+            unpauseButton.SetActive(false);
+        }
     }
 }
