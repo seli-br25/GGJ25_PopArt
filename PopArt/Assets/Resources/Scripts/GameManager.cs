@@ -275,8 +275,9 @@ public class GameManager : MonoBehaviour
         if (currentArtwork.components.TrueForAll(c => c.isRightColor))
         {
             Debug.Log("Du hast gewonnen!");
-            startCountdownText.text = "YOU WON!";
+            startCountdownText.text = "FLAWLESS FAKE!";
             startCountdownText.gameObject.SetActive(true);
+            background.SetActive(true);
             gameEnded = true;
             gameStarted = false;
             backgroundMusic.Stop();
